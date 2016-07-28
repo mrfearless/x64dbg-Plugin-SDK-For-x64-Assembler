@@ -8,7 +8,7 @@ Overview
 
 This is a consolidation and conversion of the original x64dbg plugin SDK files: _plugins.h, _plugin_types.h, bridgemain.h & _exports.h to a format that will work with JWasm64/HJwasm and other assemblers. Currently this package only supports 64bit x64dbg (x64dbg).
 
-For 64bit support use the x64dbg Plugin SDK for x86 Assembler found here: https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
+For 32bit support use the x64dbg Plugin SDK for x86 Assembler found here: https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
 
 
 Whats included in this package
