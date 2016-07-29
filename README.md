@@ -4,94 +4,41 @@ fearless 2016 - [www.LetTheLight.in](http://www.LetTheLight.in)
 
 ## Overview
 
-This is a consolidation and conversion of the original x64dbg plugin SDK files: `_plugins.h`, `_plugin_types.h`, `bridgemain.h` & `_exports.h` to a format that will work with JWasm64/HJwasm and other assemblers. Currently this package only supports 64bit x64dbg (x64dbg).
+This is a consolidation and conversion of the original x64dbg plugin SDK files: `_plugins.h`, `_plugin_types.h`, `bridgemain.h` & `_exports.h` to a format that will work with JWasm64 / HJWasm and other assemblers. Currently this package only supports 64bit x64dbg (x64dbg).
 
 For 32bit support use the x64dbg Plugin SDK For x86 Assembler found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler)
 
 v1.0.0.5 - Last updated: 28/07/2016 - small updates
 
-## Whats included in this package
-* JWasm64 version of the x64dbg plugin SDK found in the pluginsdk folder
-* RadASM testplugin project and files as a working example of how to use the plugin SDK
-* RadASM template for creating your own x64dbg plugins.
-* RadASM Code Completion files for easy use of the Plugin SDK For x64 Assembler (JWasm64)
+## More Information
 
-The files that comprise this version of the x64dbg Plugin SDK For x64 Assembler are
+[Whats included in the x64dbg Plugin SDK (x64) package](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler/wiki/Whats-included-in-the-x64dbg-Plugin-SDK-(x64)-package)
 
-* `pluginsdk\include\x64dbgpluginsdk.inc` - _Main include file - see below on how to use._
-* `pluginsdk\include\x64dbg.inc` - _x64dbg masm/jwasm style include converted from x64dbg source files_
-* `pluginsdk\include\x64bridge.inc` - _x64bridge masm/jwasm style include converted from x64dbg bridgemain.h_
-* `pluginsdk\include\dbghelp_x64.inc` - _dbghelp_x64 masm/jwasm style include_
-* `pluginsdk\include\TitanEngine_x64.inc` - _TitanEngine masm/jwasm style include converted from TitanEngine.h_
-* `pluginsdk\lib\x64dbg.lib` - _x64dbg library from the x64dbg source for x64dbg.dll_
-* `pluginsdk\lib\x64bridge.lib` - _x64bridge library from the x64dbg source for x64bridge.dll_
-* `pluginsdk\lib\dbghelp_x64.lib` - _dbghelp_x64 library from x64dbg source for dbghelp.dll_
-* `pluginsdk\lib\TitanEngine_x64.lib` - _TitanEngine library from the x64dbg source for TitanEngine.dll_
+[How to use the x64dbg Plugin SDK (x64)](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler/wiki/How-to-use-the-x64dbg-Plugin-SDK-(x64))
 
-The files that are included in the extra's folder are
+[x64dbg plugin manual build instructions](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler/wiki/x64dbg-plugin-manual-build-instructions)
 
-* `install.bat` - _Copies the pluginsdk files to your Jwasm folders (lib, include)_
-* `JwasmApiCall.api` - _RadASM Code Completion file for api calls (for x64dbg plugin SDK)_
-* `JwasmApiConst.api` - _RadASM Code Completion file for constants (for x64dbg plugin SDK)_
-* `JwasmApiStruct.api` - _RadASM Code Completion file for structures (for x64dbg plugin SDK)_
-* `x64dbgplugin.tpl` - _RadASM 64bit x64dbg plugin template for easy project creation_
+[Additional Notes](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler/wiki/Additional-Notes)
+
+## Plugins that use the x64dbg Plugin SDK for x64 Assembler
+
+* [APISearch Plugin (x64)](https://github.com/mrfearless/APISearch-Plugin-x64)
+* [AutoCmdLine Plugin (x64)](https://github.com/mrfearless/AutoCmdLine-Plugin-x64)
+* [StepInt3 Plugin (x64)](https://github.com/mrfearless/StepInt3-Plugin-x64)
 
 
-## How to use
-There are a number of ways of using the pluginsdk files in your own projects
+## Plugins that use the x64dbg Plugin SDK for x86 Assembler
 
-* Copy the `x64dbgpluginsdk.inc`, `x64dbg.inc`, `x64bridge.inc`, `debug_x64.inc` and `TitanEngine_x64.inc` files from `pluginsdk\include` folder to your `Jwasm\include` folder
-* Copy the `x64dbg.lib`, `x64bridge.lib`, `debug_x64.lib` and `TitanEngine_x64`.lib files from `pluginsdk\lib` folder to your `Jwasm\lib` folder
-* Add a line in your source code:
-```
-    include x64dbgpluginsdk.inc
-```
-* or add the following lines to your source code
-```
-    include x64dbg.inc
-    include x64bridge.inc
-    include debug_x64.inc
-	include TitanEngine_x64.inc
-	includelib x64dbg.lib
-    includelib x64bridge.lib
-    includelib debug_x64.lib
-	includelib TitanEngine_x64.lib
-```
+The x64dbg Plugin SDK for x86 Assembler can be found [here](https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler)
 
-Alternatively you can use the included template to easily create a x64dbg plugin project ready to use
+* [APIInfo Plugin (x86)](https://github.com/mrfearless/APIInfo-Plugin-x86)
+* [APISearch Plugin (x86)](https://github.com/mrfearless/APISearch-Plugin-x86)
+* [AutoCmdLine Plugin (x86)](https://github.com/mrfearless/AutoCmdLine-Plugin-x86)
+* [StepInt3 Plugin (x86)](https://github.com/mrfearless/StepInt3-Plugin-x86)
 
-* Copy the `template\x64dbg_plugin.tpl` file to your `RadASM\Jwasm\Templates` folder.
-* Open RadASM and choose a new project.
-* Choose the project name and folder.
-* Choose assembler type as JWasm
-* Specify project as a Dll64 (64bit dynamic link library) type.
-* Select 'x64dbg plugin' as the project template to use and allow it to create & setup a ready to run barebones x64dbg plugin.
-
-With any of these options, feel free to add any other includes and libs as you normally would.
-
-You may need to download my JWasm for RadASM package to add in support for JWasm / JWasm64 [here](http://masm32.com/board/index.php?topic=4162.0)
-
-## Manual compile and link settings
-* Assemble: `\JWASM\BIN\JWASM64.EXE /c -win64 -Zp8 /Zi /win64 /D_WIN64 /Cp /nologo /W2 /I"\JWasm\Include", "MyPlugin.asm"`
-* Link: `\JWASM\BIN\LINK.EXE /SUBSYSTEM:WINDOWS /RELEASE /DLL /DEF:"MyPlugin.def" /LIBPATH:"\JWasm\Lib\x64" /MACHINE:X64 /OUT:"MyPlugin.dp64", "MyPlugin.obj", "MyPlugin.res"`
-* Resource: `\JWASM\BIN\RC.EXE /v "MyPlugin.rc"`
-
-## Notes
-For more information on the x64dbg plugin SDK functions and overall usage please read the x64dbg help manual section on plugins found [here](http://x64dbg.com/help/index.htm).
-
-Make sure you get the latest versions of the `x64dbg.lib`, `x64bridge.lib` files from the x64dbg source. The files provided here may become outdated as changes occur with the development of the x64dbg debugger. I may add changes to the `x64dbg.inc` and `x64bridge.inc` to take into account new features and functions in future - but I wont guarantee that I will, you may need to manually update the .inc files yourself and download the newest .lib files if you want this package to stay up to date.
-
-Including a manifest and version info in your plugin .dll (.dp64) may prevent anti-virus false positives. The testplugin has an example of this usage.
-
-* [RadASM IDE](http://www.softpedia.com/get/Programming/File-Editors/RadASM.shtml)
-* [Masm32](http://www.masm32.com/masmdl.htm)
-* [JWasm64](http://masm32.com/board/index.php?topic=3795.0)
-* [JWasm for RadASM package](http://masm32.com/board/index.php?topic=4162.0)
 
 
 ## x64dbg
 * [x64dbg website](http://x64dbg.com)
-* [x64dbg source](https://github.com/x64dbg/x64dbg)
-* [x64dbg downloads](http://sourceforge.net/projects/x64dbg)
-* [x64dbg plugin](https://github.com/x64dbg/testplugin)
-* [Mr. eXoDia](http://mrexodia.cf)
+* [x64dbg github](https://github.com/x64dbg/x64dbg)
+
