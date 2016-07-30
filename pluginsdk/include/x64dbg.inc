@@ -26,7 +26,7 @@
 ;
 ;--------------------------------------------------------------------------------------------------------
 
-; x32dbg.inc functions - newer vsce2013 prototypes
+; x64dbg.inc functions - newer vsce2013 prototypes
 ;
 _dbg_addrinfoget            PROTO :QWORD, :QWORD, :QWORD ; (duint addr, SEGMENTREG segment, ADDRINFO* addrinfo);
 _dbg_addrinfoset            PROTO :QWORD, :QWORD ; (duint addr, ADDRINFO* addrinfo);
@@ -50,7 +50,13 @@ _dbg_sendmessage            PROTO :QWORD, :QWORD, :QWORD ; (DBGMSG type, void* p
 _dbg_valfromstring          PROTO :QWORD, :QWORD ; (const char* string, duint* value);
 _dbg_valtostring            PROTO :QWORD, :QWORD ; (const char* string, duint value);
 
-; x32dbg.inc plugin functions - vs2010/vsce2013 prototypes
+; x64dbg.inc main plugin sdk exports/functions:
+;
+pluginit	        		PROTO :QWORD            ; Required prototype and export for x64dbg plugin SDK
+plugstop            		PROTO                   ; Required prototype and export for x64dbg plugin SDK
+plugsetup           		PROTO :QWORD            ; Required prototype and export for x64dbg plugin SDK
+
+; x64dbg.inc plugin functions - vs2010/vsce2013 prototypes
 ;
 _plugin_debugpause          PROTO
 _plugin_debugskipexceptions PROTO :QWORD ; (bool skip);
