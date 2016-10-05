@@ -1,15 +1,17 @@
 ;--------------------------------------------------------------------------------------------------------
-; x64dbg plugin SDK for JWasm64 - fearless 2015 - www.LetTheLight.in
+; x64dbg Plugin SDK For x64 Assembler - https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler
 ;
-; v1.0.0.5 - Last updated: 28/07/2016 
+; fearless 2016 - www.LetTheLight.in
 ;
-; Supports 64bit x64dbg only.
+; v1.0.0.6 - Last updated: 29/09/2016 
 ;
-; The x64dbg plugin SDK for JWasm64 can be downloaded from here:
-; https://bitbucket.org/mrfearless/x64dbg-plugin-sdk-for-JWasm64/overview
+; This SDK Supports 64bit x64dbg only.
 ;
-; The x64dbg plugin SDK for Masm can be downloaded from here:
-; https://bitbucket.org/mrfearless/x64dbg-plugin-sdk-for-masm/overview
+; x64dbg Plugin SDK For x64 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler
+;
+; x64dbg Plugin SDK For x86 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
 ;
 ; Include file for x64dbg.dll exports, constants and structures.
 ;
@@ -76,6 +78,8 @@ _plugin_unregistercommand   PROTO :QWORD, :QWORD ; (int pluginHandle, const char
 _plugin_waituntilpaused     PROTO
 _plugin_registerexprfunction PROTO :QWORD, :QWORD, :QWORD, :QWORD, :QWORD ; (int pluginHandle, const char* name, int argc, CBPLUGINEXPRFUNCTION cbFunction, void* userdata);
 _plugin_unregisterexprfunction PROTO :QWORD, :QWORD ; (int pluginHandle, const char* name);
+_plugin_unload				PROTO :QWORD ; (const char* pluginName);
+_plugin_load				PROTO :QWORD ; (const char* pluginName);
 
 ; Callback functions for plugins. Any that are used in your plugin need to be exported (added to list of functions in plugin.def)
 ; each callback function has two parameters: cbType and cbInfo. cbInfo is a pointer to a specific structure (depending on the function)

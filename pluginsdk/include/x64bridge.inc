@@ -1,15 +1,17 @@
 ;--------------------------------------------------------------------------------------------------------
-; x64dbg plugin SDK for JWasm64 - fearless 2015 - www.LetTheLight.in
+; x64dbg Plugin SDK For x64 Assembler - https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler
 ;
-; v1.0.0.5 - Last updated: 28/07/2016 
+; fearless 2016 - www.LetTheLight.in
 ;
-; Supports 64bit x64dbg only.
+; v1.0.0.6 - Last updated: 29/09/2016 
 ;
-; The x64dbg plugin SDK for JWasm64 can be downloaded from here:
-; https://bitbucket.org/mrfearless/x64dbg-plugin-sdk-for-JWasm64/overview
+; This SDK Supports 64bit x64dbg only.
 ;
-; The x64dbg plugin SDK for Masm32 can be downloaded from here:
-; https://bitbucket.org/mrfearless/x64dbg-plugin-sdk-for-masm/overview
+; x64dbg Plugin SDK For x64 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x64-Assembler
+;
+; x64dbg Plugin SDK For x86 Assembler can be downloaded from here:
+; https://github.com/mrfearless/x64dbg-Plugin-SDK-For-x86-Assembler
 ;
 ; Include file for x64bridge.dll exports, constants and structures.
 ;
@@ -136,15 +138,10 @@ DbgDelEncodeTypeSegment         PROTO :QWORD ;(duint start);
 DbgGetWatchList                 PROTO :QWORD ;(ListOf(WATCHINFO) list);
 
 
-
-
-
-
-
-
 GuiGetCurrentAddress			TEXTEQU <GuiSelectionGet> ; alias
 
 ; GUI functions
+GuiTranslateText				PROTO :QWORD ; (const char* Source);
 GuiDisasmAt                     PROTO :QWORD, :QWORD ; (duint addr, duint cip);
 GuiSetDebugState                PROTO :QWORD ; (DBGSTATE state);
 GuiAddLogMessage                PROTO :QWORD ; (const char* msg);
@@ -231,6 +228,14 @@ GuiUpdateDisable				PROTO
 GuiLoadGraph     				PROTO :QWORD ; (BridgeCFGraphList* graph);
 GuiGraphAt     					PROTO :QWORD ; (duint addr);
 GuiUpdateGraphView				PROTO 
+GuiDisableLog					PROTO
+GuiEnableLog					PROTO
+GuiAddFavouriteTool				PROTO :QWORD, :QWORD ; (const char* name, const char* description);
+GuiAddFavouriteCommand			PROTO :QWORD, :QWORD ; (const char* name, const char* shortcut);
+GuiSetFavouriteToolShortcut		PROTO :QWORD, :QWORD ; (const char* name, const char* shortcut);
+GuiFoldDisassembly				PROTO :QWORD, :QWORD ; (duint startAddress, duint length);
+GuiSelectInMemoryMap			PROTO :QWORD ; (duint addr);
+GuiGetActiveView				PROTO :QWORD ; (ACTIVEVIEW* activeView);
 
 
 ; enum macro is used to enumerate constants - similar to how enum works in c. 
@@ -288,6 +293,7 @@ MAX_COMMAND_LINE_SIZE 			EQU 256d
 MAX_MNEMONIC_SIZE               EQU 64d
 PAGE_SIZE                       EQU 1000h
 TCP_ADDR_SIZE 					EQU 50
+
 
 ; Debugger enums
 enum initialized,paused,running,stopped
@@ -814,14 +820,19 @@ XREF_INFO						STRUCT 8
 XREF_INFO						ENDS
 
 ; Gui defines
+; Plugin menu handle enums
 GUI_PLUGIN_MENU                 EQU 0
 GUI_DISASM_MENU                 EQU 1
 GUI_DUMP_MENU                   EQU 2
 GUI_STACK_MENU                  EQU 3
 
-GUI_DISASSEMBLY                 EQU 0
-GUI_DUMP                        EQU 1
-GUI_STACK                       EQU 2
+; GuiSelectionGet window handle enums
+GUI_DISASSEMBLY 				EQU 0
+GUI_DUMP 						EQU 1
+GUI_STACK 						EQU 2
+GUI_GRAPH 						EQU 3
+GUI_MEMMAP 						EQU 4
+GUI_SYMMOD 						EQU 5
 
 GUI_MAX_LINE_SIZE               EQU 65536d
 GUI_MAX_DISASSEMBLY_SIZE        EQU 2048d
@@ -910,6 +921,13 @@ GUI_UPDATE_WATCH_VIEW      		EQU 78 ; param1=unused,               param2=unused
 GUI_LOAD_GRAPH      			EQU 79 ; param1=BridgeCFGraphList*    param2=unused
 GUI_GRAPH_AT      				EQU 80 ; param1=duint addr            param2=unused
 GUI_UPDATE_GRAPH_VIEW      		EQU 81 ; param1=unused,               param2=unused
+GUI_SET_LOG_ENABLED				EQU 82 ; param1=bool isEnabled        param2=unused
+GUI_ADD_FAVOURITE_TOOL			EQU 83 ; param1=const char* name      param2=const char* description
+GUI_ADD_FAVOURITE_COMMAND		EQU 84 ; param1=const char* command   param2=const char* shortcut
+GUI_SET_FAVOURITE_TOOL_SHORTCUT	EQU 85 ; param1=const char* name      param2=const char* shortcut
+GUI_FOLD_DISASSEMBLY			EQU 86 ; param1=duint startAddress    param2=duint length
+GUI_SELECT_IN_MEMORY_MAP		EQU 87 ; param1=duint addr,           param2=unused
+GUI_GET_ACTIVE_VIEW				EQU 88 ; param1=ACTIVEVIEW*,          param2=unused
 
 ; GUI Typedefs
 GUICALLBACK                     PROTO 
@@ -940,6 +958,12 @@ SCRIPTTYPEINFO                  STRUCT 8
     completeCommand             QWORD ? ; pointer to GUISCRIPTCOMPLETER ?
 SCRIPTTYPEINFO                  ENDS
 
+ACTIVEVIEW						STRUCT 8
+    titleHwnd					QWORD ? ; void* 
+    classHwnd					QWORD ? ; void* 
+    szTitle						DB MAX_STRING_SIZE DUP (?)
+    className					DB MAX_STRING_SIZE DUP (?)
+ACTIVEVIEW						ENDS
 
 ; Dbg functions
 dbgfunctionsget                 PROTO
@@ -1056,7 +1080,11 @@ DBGFUNCTIONS                    STRUCT
 	GetDbgEvents				QWORD ? ; ();
 	ModGetParty					QWORD ? ; (duint base);
 	ModSetParty					QWORD ? ; (duint base, int party);
-	WatchIsWatchDogTriggered	QWORD ? ; (unsigned int id);	
+	WatchIsWatchDogTriggered	QWORD ? ; (unsigned int id);
+    MemIsCodePage				QWORD ? ; (duint addr, bool refresh);
+    AnimateCommand				QWORD ? ; (const char* command);
+    DbgSetDebuggeeInitScript	QWORD ? ; (const char* fileName);
+    DbgGetDebuggeeInitScript	QWORD ? ; ()	
 DBGFUNCTIONS                    ENDS
 
 
