@@ -3,7 +3,7 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.6 - Last updated: 29/09/2016 
+; v1.0.0.7 - Last updated: 15/10/2016 
 ;
 ; This SDK Supports 64bit x64dbg only.
 ;
@@ -107,7 +107,10 @@ CBDEBUGEVENT                PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLU
 CBMENUENTRY                 PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_MENUENTRY structure: hEntry
 CBWINEVENT                  PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_WINEVENT structure: message, result, retval (only set this to true, never to false)
 CBWINEVENTGLOBAL            PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_WINEVENTGLOBAL structure: message, retval (only set this to true, never to false)
-
+CBLOADDB					PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_LOADSAVEDB
+CBSAVEDB					PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_LOADSAVEDB
+CBFILTERSYMBOL				PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_FILTERSYMBOL
+CBTRACEEXECUTE				PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_TRACEEXECUTE
 
 ; enum macro is used to enumerate constants - similar to how enum works in c. 
 enum macro _param_:VARARG
@@ -301,6 +304,17 @@ PLUG_CB_LOADSAVEDB		STRUCT 8
     loadSaveType		QWORD ?
 PLUG_CB_LOADSAVEDB		ENDS
 
+PLUG_CB_FILTERSYMBOL	STRUCT 8
+	symbol				QWORD ? ; pointer to const char* 
+    retval				QWORD ? ; bool
+PLUG_CB_FILTERSYMBOL	ENDS
+
+PLUG_CB_TRACEEXECUTE	STRUCT 8
+	cip					QWORD ?
+	stop				QWORD ? ; bool
+PLUG_CB_TRACEEXECUTE	ENDS
+
+
 enum CB_INITDEBUG,CB_STOPDEBUG,CB_CREATEPROCESS,CB_EXITPROCESS,CB_CREATETHREAD,CB_EXITTHREAD,CB_SYSTEMBREAKPOINT,CB_LOADDLL,CB_UNLOADDLL,CB_OUTPUTDEBUGSTRING,CB_EXCEPTION
 enum CB_BREAKPOINT=11d,CB_PAUSEDEBUG,CB_RESUMEDEBUG,CB_STEPPED,CB_ATTACH,CB_DETACH,CB_DEBUGEVENT,CB_MENUENTRY,CB_WINEVENT,CB_WINEVENTGLOBAL
-enum CB_LOADDB=21d,CB_SAVEDB
+enum CB_LOADDB=21d,CB_SAVEDB,CB_FILTERSYMBOL,CB_TRACEEXECUTE,CB_LAST

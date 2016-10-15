@@ -29,6 +29,9 @@ PLUG_CB_DEBUGEVENT,DebugEvent
 PLUG_CB_MENUENTRY,hEntry
 PLUG_CB_WINEVENT,message,result,retval
 PLUG_CB_WINEVENTGLOBAL,message,retval
+PLUG_CB_LOADSAVEDB,root,loadSaveType
+PLUG_CB_FILTERSYMBOL,symbol,retval
+PLUG_CB_TRACEEXECUTE,cip,stop
 MEMORY_INFO,value,size_,mnemonic
 VALUE_INFO,value,size_
 MEMPAGE,mbi,info
@@ -51,3 +54,4 @@ DBGPATCHINFO,module,address,oldbyte,newbyte
 DBGCALLSTACKENTRY,address,from,to,comment_
 DBGCALLSTACK,total,entries
 DBGPROCESSINFO,dwProcessId,szExeFile
+DBGFUNCTIONS,AssembleAtEx,SectionFromAddr,ModNameFromAddr,ModBaseFromAddr,ModBaseFromName,ModSizeFromAddr,Assemble,PatchGet,PatchInRange,MemPatch,PatchRestoreRange,PatchEnum,PatchRestore,PatchFile,ModPathFromAddr,ModPathFromName,DisasmFast,MemUpdateMap,GetCallStack,GetSEHChain,SymbolDownloadAllSymbols,GetJitAuto,GetJit,GetDefJit,GetProcessList,GetPageRights,SetPageRights,PageRightsToString,IsProcessElevated,GetCmdline,SetCmdline,FileOffsetToVa,VaToFileOffset,GetAddrFromLine,GetSourceFromAddr,ValFromString,PatchGetEx,GetBridgeBP,StringFormatInline,GetMnemonicBrief,GetTraceRecordHitCount,GetTraceRecordByteType,SetTraceRecordType,GetTraceRecordType,EnumHandles,GetHandleName,EnumTCPConnections,GetDbgEvents,ModGetParty,ModSetParty,WatchIsWatchDogTriggered,MemIsCodePage,AnimateCommand,DbgSetDebuggeeInitScript,DbgGetDebuggeeInitScript
