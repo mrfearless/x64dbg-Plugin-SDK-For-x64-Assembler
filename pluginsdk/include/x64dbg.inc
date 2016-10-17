@@ -3,7 +3,9 @@
 ;
 ; fearless 2016 - www.LetTheLight.in
 ;
-; v1.0.0.7 - Last updated: 15/10/2016 
+; v1.0.0.8 - Last updated: 17/10/2016 
+; 
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/98d04b2a7842b92ea2eb2b2ba51a6256eb779453
 ;
 ; This SDK Supports 64bit x64dbg only.
 ;
@@ -70,6 +72,7 @@ _plugin_menuaddseparator    PROTO :QWORD ; (int hMenu);
 _plugin_menuclear           PROTO :QWORD ; (int hMenu);
 _plugin_menuseticon         PROTO :QWORD, :QWORD ; (int hMenu, const ICONDATA* icon);
 _plugin_menuentryseticon    PROTO :QWORD, :QWORD, :QWORD ; (int pluginHandle, int hEntry, const ICONDATA* icon);
+_plugin_menuentrysetchecked	PROTO :QWORD, :QWORD, :QWORD ; (int pluginHandle, int hEntry, bool checked)
 _plugin_registercommand     PROTO :QWORD, :QWORD, :QWORD, :QWORD ; (int pluginHandle, const char* command, CBPLUGINCOMMAND cbCommand, bool debugonly);
 _plugin_registercallback    PROTO :QWORD, :QWORD, :QWORD ; (int pluginHandle, CBTYPE cbType, CBPLUGIN cbPlugin);
 _plugin_startscript         PROTO :QWORD ; (CBPLUGINSCRIPT cbScript);
