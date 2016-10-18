@@ -5,7 +5,7 @@
 ;
 ; v1.0.0.9 - Last updated: 18/10/2016 
 ; 
-; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/0dc2cde1437d4ba24a0f286dbbbd5ad97bb8525e
+; Feature synced with x64dbg commit: https://github.com/x64dbg/x64dbg/commit/9138a3410e9593dafdb6177cd5f8612df7543e7a
 ;
 ; This SDK Supports 64bit x64dbg only.
 ;
@@ -115,6 +115,8 @@ CBLOADDB					PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_LOADSAVEDB
 CBSAVEDB					PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_LOADSAVEDB
 CBFILTERSYMBOL				PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_FILTERSYMBOL
 CBTRACEEXECUTE				PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_TRACEEXECUTE
+CBSELCHANGED				PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_SELCHANGED
+CBANALYZE					PROTO :QWORD, :QWORD ; cbType, cbInfo pointer to PLUG_CB_ANALYZE
 
 ; enum macro is used to enumerate constants - similar to how enum works in c. 
 enum macro _param_:VARARG
@@ -318,6 +320,14 @@ PLUG_CB_TRACEEXECUTE	STRUCT 8
 	stop				QWORD ? ; bool
 PLUG_CB_TRACEEXECUTE	ENDS
 
+PLUG_CB_SELCHANGED		STRUCT 8
+     hWindow			QWORD ?
+     VA					QWORD ?
+PLUG_CB_SELCHANGED		ENDS
+
+PLUG_CB_ANALYZE			STRUCT 8
+	graph				QWORD ; pointer to BridgeCFGraphList
+PLUG_CB_ANALYZE			ENDS
 
 enum CB_INITDEBUG,CB_STOPDEBUG,CB_CREATEPROCESS,CB_EXITPROCESS,CB_CREATETHREAD,CB_EXITTHREAD,CB_SYSTEMBREAKPOINT,CB_LOADDLL,CB_UNLOADDLL,CB_OUTPUTDEBUGSTRING,CB_EXCEPTION
 enum CB_BREAKPOINT=11d,CB_PAUSEDEBUG,CB_RESUMEDEBUG,CB_STEPPED,CB_ATTACH,CB_DETACH,CB_DEBUGEVENT,CB_MENUENTRY,CB_WINEVENT,CB_WINEVENTGLOBAL
