@@ -291,7 +291,7 @@ PLUG_CB_DEBUGEVENT      STRUCT 8
 PLUG_CB_DEBUGEVENT      ENDS
 
 PLUG_CB_MENUENTRY       STRUCT 8
-    hEntry              QWORD ?
+    hEntry              DWORD ?
 PLUG_CB_MENUENTRY       ENDS
 
 PLUG_CB_WINEVENT        STRUCT 8
